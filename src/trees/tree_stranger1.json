@@ -1,0 +1,39 @@
+{
+  "root": "s1_wait",
+  "nodes": {
+    "s1_wait": {
+      "id": "s1_wait",
+      "events": [
+        { "wait": 6000 },
+        { "status": "online" },
+        { "wait": 1000 },
+        { "send": "who gave you this id" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "s1_gone" }
+      ]
+    },
+    "s1_gone": {
+      "id": "s1_gone",
+      "events": [
+        { "wait": 500 },
+        { "send": "don't contact me again" },
+        { "wait": 1000 },
+        { "status": "offline" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "s1_gone_forever" }
+      ]
+    },
+    "s1_gone_forever": {
+      "id": "s1_gone_forever",
+      "events": [
+        { "wait": 999999 },
+        { "status": "offline" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "s1_gone_forever" }
+      ]
+    }
+  }
+}

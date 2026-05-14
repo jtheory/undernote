@@ -1,0 +1,29 @@
+{
+  "root": "ca_wait",
+  "nodes": {
+    "ca_wait": {
+      "id": "ca_wait",
+      "events": [
+        { "wait": 2000 },
+        { "status": "online" },
+        { "wait": 1000 },
+        { "send": "[character A placeholder]" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "ca_idle" }
+      ]
+    },
+    "ca_idle": {
+      "id": "ca_idle",
+      "events": [
+        { "wait": 30000 },
+        { "status": "offline" },
+        { "wait": 15000 },
+        { "status": "online" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "ca_idle" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "root": "se_wait",
+  "nodes": {
+    "se_wait": {
+      "id": "se_wait",
+      "events": [
+        { "wait": 4000 },
+        { "status": "online" },
+        { "wait": 1000 },
+        { "send": "Prove it's you." }
+      ],
+      "patterns": [
+        { "pattern": "yes|yeah|it'?s me|c'?est moi", "next": "se_believes" },
+        { "pattern": ".*", "next": "se_doubts" }
+      ]
+    },
+    "se_believes": {
+      "id": "se_believes",
+      "events": [
+        { "wait": 1500 },
+        { "send": "Alright. I'll talk. But not here." },
+        { "wait": 2000 },
+        { "send": "You know where to find me when you're ready." },
+        { "wait": 3000 },
+        { "status": "offline" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "se_idle" }
+      ]
+    },
+    "se_doubts": {
+      "id": "se_doubts",
+      "events": [
+        { "wait": 800 },
+        { "send": "That's not how you talk. Try again." }
+      ],
+      "patterns": [
+        { "pattern": "yes|yeah|it'?s me|c'?est moi", "next": "se_believes" },
+        { "pattern": ".*", "next": "se_doubts_final" }
+      ]
+    },
+    "se_doubts_final": {
+      "id": "se_doubts_final",
+      "events": [
+        { "wait": 1000 },
+        { "send": "I heard you: \"{message}\". That's not it." },
+        { "wait": 2000 },
+        { "send": "Don't contact me again." },
+        { "wait": 1500 },
+        { "status": "offline" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "se_idle" }
+      ]
+    },
+    "se_idle": {
+      "id": "se_idle",
+      "events": [
+        { "wait": 30000 },
+        { "status": "offline" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "se_idle" }
+      ]
+    }
+  }
+}

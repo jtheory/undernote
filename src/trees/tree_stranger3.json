@@ -1,0 +1,27 @@
+{
+  "root": "s3_wait",
+  "nodes": {
+    "s3_wait": {
+      "id": "s3_wait",
+      "events": [
+        { "wait": 5000 },
+        { "status": "online" },
+        { "wait": 2000 },
+        { "send": "..." }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "s3_dots" }
+      ]
+    },
+    "s3_dots": {
+      "id": "s3_dots",
+      "events": [
+        { "wait": 2500 },
+        { "send": "..." }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "s3_dots" }
+      ]
+    }
+  }
+}

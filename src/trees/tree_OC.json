@@ -1,0 +1,27 @@
+{
+  "root": "oc_wait",
+  "nodes": {
+    "oc_wait": {
+      "id": "oc_wait",
+      "events": [
+        { "wait": 2000 },
+        { "status": "online" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "oc_idle" }
+      ]
+    },
+    "oc_idle": {
+      "id": "oc_idle",
+      "events": [
+        { "wait": 60000 },
+        { "status": "offline" },
+        { "wait": 30000 },
+        { "status": "online" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "oc_idle" }
+      ]
+    }
+  }
+}

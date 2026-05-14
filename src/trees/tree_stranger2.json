@@ -1,0 +1,46 @@
+{
+  "root": "s2_wait",
+  "nodes": {
+    "s2_wait": {
+      "id": "s2_wait",
+      "events": [
+        { "wait": 3000 },
+        { "status": "online" },
+        { "wait": 1500 },
+        { "send": "hello" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "s2_reply1" }
+      ]
+    },
+    "s2_reply1": {
+      "id": "s2_reply1",
+      "events": [
+        { "wait": 1200 },
+        { "send": "you found me. interesting." }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "s2_reply2" }
+      ]
+    },
+    "s2_reply2": {
+      "id": "s2_reply2",
+      "events": [
+        { "wait": 2000 },
+        { "send": "i have to go now. they'll find this channel." },
+        { "wait": 3000 },
+        { "status": "deleted" }
+      ],
+      "patterns": [
+        { "pattern": ".*", "next": "s2_deleted" }
+      ]
+    },
+    "s2_deleted": {
+      "id": "s2_deleted",
+      "events": [
+        { "status": "deleted" }
+      ],
+      "patterns": []
+    }
+  }
+}
