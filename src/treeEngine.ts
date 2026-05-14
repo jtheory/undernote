@@ -35,25 +35,50 @@ export class TreeEngine {
   private playPing() {
     const ctx = this.audioContext;
     if (!ctx) return;
+    const t = ctx.currentTime;
+
+    // Option 6 — 280Hz, 500ms, slow hum-like fade
     const osc = ctx.createOscillator();
-    const gainNode = ctx.createGain();
     const filter = ctx.createBiquadFilter();
-
+    const gain = ctx.createGain();
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(820, ctx.currentTime);
-    osc.detune.setValueAtTime(-8, ctx.currentTime);
-
+    osc.frequency.setValueAtTime(280, t);
     filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(1400, ctx.currentTime);
-
-    gainNode.gain.setValueAtTime(0.07, ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.09);
-
+    filter.frequency.setValueAtTime(600, t);
+    gain.gain.setValueAtTime(0.001, t);
+    gain.gain.linearRampToValueAtTime(0.07, t + 0.06);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.50);
     osc.connect(filter);
-    filter.connect(gainNode);
-    gainNode.connect(ctx.destination);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.09);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.50);
+
+    // Option 4b — 280Hz + soft relay clicks, same duration (try this instead)
+    // const makeClick = (when: number, g: number) => {
+    //   const c = ctx.createOscillator();
+    //   const cg = ctx.createGain();
+    //   c.type = 'sine';
+    //   c.frequency.setValueAtTime(80, when);
+    //   c.frequency.exponentialRampToValueAtTime(40, when + 0.012);
+    //   cg.gain.setValueAtTime(g, when);
+    //   cg.gain.exponentialRampToValueAtTime(0.001, when + 0.012);
+    //   c.connect(cg); cg.connect(ctx.destination);
+    //   c.start(when); c.stop(when + 0.015);
+    // };
+    // makeClick(t, 0.06);
+    // const osc = ctx.createOscillator();
+    // const filter = ctx.createBiquadFilter();
+    // const gain = ctx.createGain();
+    // osc.type = 'sine';
+    // osc.frequency.setValueAtTime(280, t);
+    // filter.type = 'lowpass';
+    // filter.frequency.setValueAtTime(600, t);
+    // gain.gain.setValueAtTime(0.08, t + 0.004);
+    // gain.gain.exponentialRampToValueAtTime(0.001, t + 0.30);
+    // osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+    // osc.start(t + 0.004); osc.stop(t + 0.30);
+    // makeClick(t + 0.30, 0.04);
   }
 
   initContact(contactId: string, treeKey: string, currentNodeId: string) {
