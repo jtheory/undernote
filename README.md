@@ -1,73 +1,27 @@
-# React + TypeScript + Vite
+# undernote
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**[→ Launch Undernote](https://jtheory.github.io/undernote/)**
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Messagerie chiffrée. Éphémère par conception.
 
-## React Compiler
+Undernote is a peer-to-peer encrypted messenger with no central registry, no accounts, and no recovery. Your identity is your device. Lose the device, lose the identity — that is not a bug.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Sécurité:**
 
-## Expanding the ESLint configuration
+- No servers. No registration. No logs.
+- All messages are erased automatically on exit — not archived, not cached, gone.
+- Identity is a 12-character device-bound token. There is no password reset because there is no password. There is no account recovery because there is no account.
+- Contact requests succeed silently whether or not the recipient exists. Existence is revealed only by response.
+- Open source. Audit it yourself or trust nothing.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Pour commencer:**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Generate a new identity or reconnect with an existing one. Add a contact by their ID. Wait.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The interface is what it is. If you wanted something pretty, you chose the wrong application.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+*Developed and maintained independently. Not affiliated with any government, intelligence service, or technology company. Offered as-is, without warranty, to anyone who needs it.*
