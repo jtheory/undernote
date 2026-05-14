@@ -246,15 +246,17 @@ function ContactList({
   activity,
   onSelect,
   onAdd,
+  isMobile,
 }: {
   contacts: Contact[];
   activeId: string | null;
   activity: Set<string>;
   onSelect: (id: string) => void;
   onAdd: () => void;
+  isMobile: boolean;
 }) {
   return (
-    <div style={styles.contactList}>
+    <div style={{ ...styles.contactList, width: isMobile ? '100%' : 220, borderRight: isMobile ? 'none' : '1px solid var(--green)' }}>
       <div style={styles.contactListHeader}>
         <span style={{ letterSpacing: '0.1em' }}>CONTACTS</span>
         <button onClick={onAdd} style={{ fontSize: 11, padding: '2px 6px' }} title="Ctrl+N">
@@ -435,10 +437,34 @@ function ChatPanel({
 function StatusBar({
   player,
   onKill,
+  isMobile,
+  mobileView,
+  onBack,
 }: {
   player: PlayerState;
   onKill: () => void;
+  isMobile: boolean;
+  mobileView: 'contacts' | 'chat';
+  onBack: () => void;
 }) {
+  if (isMobile) {
+    return (
+      <div style={styles.statusBar}>
+        {mobileView === 'chat' ? (
+          <button onClick={onBack} style={{ fontSize: 11, border: 'none', padding: '2px 0' }}>
+            ← CONTACTS
+          </button>
+        ) : (
+          <span style={{ fontSize: 11 }}>[{player.handle}]</span>
+        )}
+        <span style={{ flex: 1 }} />
+        <button onClick={onKill} style={{ fontSize: 11 }} title="Ctrl+K">
+          [KILL SESSION]
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div style={styles.statusBar}>
       <span>[{player.handle} | {player.id}]</span>
@@ -448,11 +474,7 @@ function StatusBar({
       <span className="dim" style={{ fontSize: 10, flex: 1 }}>
         MESSAGES WILL BE ERASED ON EXIT
       </span>
-      <button
-        onClick={onKill}
-        style={{ fontSize: 11 }}
-        title="Ctrl+K"
-      >
+      <button onClick={onKill} style={{ fontSize: 11 }} title="Ctrl+K">
         [KILL SESSION]
       </button>
     </div>
@@ -675,7 +697,13 @@ export default function App() {
 
   return (
     <div style={styles.appRoot}>
-      <StatusBar player={player} onKill={killSession} />
+      <StatusBar
+        player={player}
+        onKill={killSession}
+        isMobile={isMobile}
+        mobileView={mobileView}
+        onBack={() => setMobileView('contacts')}
+      />
       <div style={styles.body}>
         {showContactList && (
           <ContactList
@@ -684,26 +712,16 @@ export default function App() {
             activity={activity}
             onSelect={selectContact}
             onAdd={() => setShowAdd(true)}
+            isMobile={isMobile}
           />
         )}
         {showChat && (
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-            {isMobile && (
-              <button
-                onClick={() => setMobileView('contacts')}
-                style={{ alignSelf: 'flex-start', margin: 8, fontSize: 11, border: 'none' }}
-                className="dim"
-              >
-                ← CONTACTS
-              </button>
-            )}
-            <ChatPanel
-              contact={activeContact}
-              messages={activeMessages}
-              playerHandle={player.handle}
-              onSend={handlePlayerSend}
-            />
-          </div>
+          <ChatPanel
+            contact={activeContact}
+            messages={activeMessages}
+            playerHandle={player.handle}
+            onSend={handlePlayerSend}
+          />
         )}
       </div>
       {showAdd && (
@@ -735,8 +753,9 @@ const styles: Record<string, React.CSSProperties> = {
   },
   loginBox: {
     border: '1px solid var(--green)',
-    padding: '32px 40px',
-    minWidth: 320,
+    padding: '32px 24px',
+    minWidth: 280,
+    maxWidth: '90vw',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -846,7 +865,9 @@ const styles: Record<string, React.CSSProperties> = {
   modal: {
     background: 'var(--black)',
     border: '1px solid var(--green)',
-    padding: '24px 32px',
-    minWidth: 360,
+    padding: '24px 24px',
+    minWidth: 280,
+    maxWidth: '90vw',
+    width: 360,
   },
 };
