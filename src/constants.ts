@@ -1,7 +1,7 @@
 export const TREE_ASSIGNMENT_RATES = {
-  CHARACTER: 5,   // percent (0–4)
-  STRANGER: 15,   // percent (5–19)
-  // remainder (20–99) = silence
+  CHARACTER: 10,  // percent
+  STRANGER: 60,   // percent
+  // remainder = silence
 };
 
 export const ID_REGEX = /^[a-z0-9]{12}$/;
