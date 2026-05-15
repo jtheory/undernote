@@ -188,10 +188,16 @@ html, body, #root {
       rgba(0, 0, 0, 0.10) 2px,
       rgba(0, 0, 0, 0.10) 4px
     ),
+    /* Convex highlight — faint centre glow, reads as screen bowing toward viewer */
+    radial-gradient(
+      ellipse 70% 60% at 50% 45%,
+      rgba(51, 255, 51, 0.035) 0%,
+      transparent 70%
+    ),
     /* Vignette */
     radial-gradient(
       ellipse at center,
       transparent 55%,
-      rgba(0, 0, 0, 0.45) 100%
+      rgba(0, 0, 0, 0.50) 100%
     );
 }
