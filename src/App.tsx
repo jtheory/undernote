@@ -535,6 +535,13 @@ export default function App() {
   }, []);
 
   const handleStatusChange = useCallback((contactId: string, status: ContactStatus) => {
+    if (status === 'deleted') {
+      setMessages(prev => {
+        const next = { ...prev };
+        delete next[contactId];
+        return next;
+      });
+    }
     setPlayer(prev => {
       if (!prev) return prev;
       const contacts = prev.contacts.map(c =>
