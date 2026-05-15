@@ -184,8 +184,6 @@ export class TreeEngine {
       const match = regex.exec(playerMessage);
       if (match) {
         const captures = match.slice(1);
-        // Update currentNodeId via callback — caller must persist
-        this.callbacks.onActivity(contactId);
         this.enterNode(contactId, treeKey, pattern.next, playerMessage, captures);
         // Signal node change
         this._onNodeChange?.(contactId, pattern.next);

@@ -26,8 +26,8 @@ const BOOT_STEPS = [
   'Negotiating ephemeral keys',
   'Locking secure relay chain',
 ];
-const STEP_DURATION = 1100; // ms per step
-const DONE_DELAY = 600;     // pause after last step before advancing
+const STEP_DURATION = 1800; // ms per step
+const DONE_DELAY = 900;     // pause after last step before advancing
 
 function Splash({ onDone }: { onDone: () => void }) {
   const [step, setStep] = useState(0);
@@ -293,7 +293,7 @@ function ContactList({
                 )}
               </span>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div className={isDeleted ? 'strike dim' : ''}>{c.handle}</div>
+                <div className={isDeleted ? 'strike' : ''}>{c.handle}</div>
                 <div className="dim" style={{ fontSize: 10, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {c.id}
                 </div>
