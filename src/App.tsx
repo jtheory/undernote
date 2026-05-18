@@ -323,11 +323,12 @@ function ChatPanel({
   onSend: (text: string) => void;
 }) {
   const [draft, setDraft] = useState('');
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'instant' });
+    const el = listRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [messages, contact?.id]);
 
   useEffect(() => {
@@ -371,7 +372,7 @@ function ChatPanel({
       </div>
 
       {/* Messages */}
-      <div style={styles.messageList}>
+      <div ref={listRef} style={styles.messageList}>
         {isDeleted && messages.length === 0 && (
           <div className="dim" style={{ textAlign: 'center', marginTop: 40, fontSize: 11 }}>
             [CHAT ERASED]
@@ -391,7 +392,6 @@ function ChatPanel({
             <span style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{m.text}</span>
           </div>
         ))}
-        <div ref={bottomRef} />
       </div>
 
       {/* Input */}
