@@ -327,8 +327,8 @@ function ChatPanel({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    bottomRef.current?.scrollIntoView({ behavior: 'instant' });
+  }, [messages, contact?.id]);
 
   useEffect(() => {
     if (contact && contact.status === 'online') {
